@@ -9,11 +9,11 @@ export class DiscordHandler {
     this._commands = [];
     this._events = [];
 
-    this._commandsPath && this.getCommands();
-    this._eventsPath && this.getEvents();
+    this._commandsPath && this.commandsInit();
+    this._eventsPath && this.eventsInit();
   }
 
-  getCommands() {
+  commandsInit() {
     console.log('🔍 Finding commands...');
     let categoryCount = 0;
     let commandCount = 0;
@@ -103,5 +103,5 @@ export class DiscordHandler {
     console.log(`${subcommandCount} subcommands found.`);
   }
 
-  getEvents() {}
+  eventsInit() {}
 }
