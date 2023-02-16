@@ -4,6 +4,7 @@ export class DiscordHandler {
   constructor({ client, commandsPath, eventsPath }) {
     if (!client) throw new Error('Property "client" is required when instantiating DiscordHandler.');
 
+    this._client = client;
     this._commandsPath = commandsPath;
     this._eventsPath = eventsPath;
     this._commands = [];
@@ -103,5 +104,19 @@ export class DiscordHandler {
     console.log(`✨ ${subcommandCount} ${subcommandCount > 1 ? 'subcommands' : 'subcommand'} found.`);
   }
 
-  eventsInit() {}
+  eventsInit() {
+    const eventPaths = getFolderPaths(this._eventsPath);
+
+    for (const eventPath of eventPaths) {
+      const eventName = eventPath.replace(/\\/g, '/').split('/').pop();
+      const eventFuncPaths = getFilePaths(eventPath, true);
+
+      this._client.on(eventName, async (arg) => {
+        for (const eventFuncPath of eventFuncPaths) {
+          const eventFunc = require(eventFuncPath);
+          await eventFunc(arg, this._client);
+        }
+      });
+    }
+  }
 }
