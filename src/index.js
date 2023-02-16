@@ -97,10 +97,10 @@ export class DiscordHandler {
       }
     }
 
-    console.log(`${categoryCount} categories found.`);
-    console.log(`${commandCount} commands found.`);
-    console.log(`${subcommandGroupCount} subcommand groups found.`);
-    console.log(`${subcommandCount} subcommands found.`);
+    console.log(`✨ ${categoryCount} ${categoryCount > 1 ? 'categories' : 'category'} found.`);
+    console.log(`✨ ${commandCount} ${commandCount > 1 ? 'commands' : 'command'} found.`);
+    console.log(`✨ ${subcommandGroupCount} subcommand ${subcommandGroupCount > 1 ? 'groups' : 'group'} found.`);
+    console.log(`✨ ${subcommandCount} ${subcommandCount > 1 ? 'subcommands' : 'subcommand'} found.`);
   }
 
   eventsInit() {}
