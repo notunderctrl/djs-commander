@@ -1,0 +1,23 @@
+{
+  "name": "discord-handler",
+  "version": "0.0.1",
+  "description": "A command and event handler that works seemlessly with Discord.js",
+  "license": "MIT",
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "rm -rf dist && tsup src/index.js --format cjs,esm --dts --clean",
+    "watch": "yarn build -- --watch src",
+    "prepublishOnly": "yarn build"
+  },
+  "devDependencies": {
+    "discord.js": "^14.7.1",
+    "tsup": "^6.6.0",
+    "typescript": "^4.9.5"
+  }
+}
