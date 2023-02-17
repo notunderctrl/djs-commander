@@ -1,8 +1,7 @@
 const { getAppCommands } = require('./getAppCommands');
 const { areCommandsDifferent } = require('./areCommandsDifferent');
 
-export async function registerCommands({ client, commands, testServer }) {
-  const localCommands = commands;
+export async function registerCommands({ client, commands: localCommands, testServer }) {
   const applicationCommands = await getAppCommands(client, testServer);
 
   for (const localCommand of localCommands) {

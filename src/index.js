@@ -12,11 +12,19 @@ export class DiscordHandler {
     this._commands = [];
     this._events = [];
 
-    this._commandsPath && this.commandsInit();
-    this._eventsPath && this.eventsInit();
+    if (this._commandsPath) {
+      this._commandsInit();
+      this._client.once('ready', () => {
+        this._registerSlashCommands();
+      });
+    }
+
+    if (this._eventsPath) {
+      this._eventsInit();
+    }
   }
 
-  commandsInit() {
+  _commandsInit() {
     console.log('🔍 Finding commands...');
     let categoryCount = 0;
     let commandCount = 0;
@@ -106,7 +114,15 @@ export class DiscordHandler {
     console.log(`✨ ${subcommandCount} ${subcommandCount > 1 ? 'subcommands' : 'subcommand'} found.`);
   }
 
-  eventsInit() {
+  _registerSlashCommands() {
+    registerCommands({
+      client: this._client,
+      commands: this._commands,
+      testServer: this._testServer,
+    });
+  }
+
+  _eventsInit() {
     // Regular event handler
     const eventPaths = getFolderPaths(this._eventsPath);
 
@@ -123,7 +139,7 @@ export class DiscordHandler {
     }
   }
 
-  getCommands() {
+  get commands() {
     return this._commands;
   }
 }
