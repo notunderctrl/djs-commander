@@ -1,12 +1,14 @@
 const { getFolderPaths, getFilePaths } = require('./utils/getPaths');
+const { registerCommands } = require('./utils/registerCommands');
 
 export class DiscordHandler {
-  constructor({ client, commandsPath, eventsPath }) {
+  constructor({ client, commandsPath, eventsPath, testServer }) {
     if (!client) throw new Error('Property "client" is required when instantiating DiscordHandler.');
 
     this._client = client;
     this._commandsPath = commandsPath;
     this._eventsPath = eventsPath;
+    this._testServer = testServer;
     this._commands = [];
     this._events = [];
 
@@ -38,7 +40,7 @@ export class DiscordHandler {
 
           const subcommandFilePaths = getFilePaths(subcommandPath);
 
-          this._commands.push({ name: subcommandGroupName, options: [], category: categoryName });
+          this._commands.push({ name: subcommandGroupName, description: 'null', options: [], category: categoryName });
 
           for (const subcommandFilePath of subcommandFilePaths) {
             subcommandCount++;
@@ -105,6 +107,7 @@ export class DiscordHandler {
   }
 
   eventsInit() {
+    // Regular event handler
     const eventPaths = getFolderPaths(this._eventsPath);
 
     for (const eventPath of eventPaths) {
@@ -118,5 +121,9 @@ export class DiscordHandler {
         }
       });
     }
+  }
+
+  getCommands() {
+    return this._commands;
   }
 }
