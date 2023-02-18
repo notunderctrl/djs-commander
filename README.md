@@ -127,7 +127,3 @@ module.exports = (interaction, commandObj) => {
 - `commandObj` is the command object exported from the command file itself. Properties such as `name`, `description` and `options` are all available within.
 
 It's important to return `true` (or any truthy value) if you don't want the command execution to be stopped (this also ensures the next validation queued up is not run).
-
-## License
-
-DJS-Commander is open-source software licensed under the [MIT license](https://opensource.org/licenses/MIT).
