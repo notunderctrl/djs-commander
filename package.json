@@ -2,7 +2,7 @@
   "name": "discord-handler",
   "version": "0.0.1",
   "description": "A command and event handler that works seemlessly with Discord.js",
-  "license": "ISC",
+  "license": "MIT",
   "exports": {
     ".": {
       "require": "./dist/index.js",
@@ -26,7 +26,6 @@
     "discord validations"
   ],
   "devDependencies": {
-    "discord.js": "^14.7.1",
     "tsup": "^6.6.0",
     "typescript": "^4.9.5"
   }

@@ -104,8 +104,4 @@ export class DiscordHandler {
       }
     });
   }
-
-  get commands() {
-    return this._commands;
-  }
 }
