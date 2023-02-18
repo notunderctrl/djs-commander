@@ -3,12 +3,13 @@ const { buildCommandTree } = require('./utils/buildCommandTree');
 const { registerCommands } = require('./utils/registerCommands');
 
 export class DiscordHandler {
-  constructor({ client, commandsPath, eventsPath, testServer }) {
+  constructor({ client, commandsPath, eventsPath, validationsPath, testServer }) {
     if (!client) throw new Error('Property "client" is required when instantiating DiscordHandler.');
 
     this._client = client;
     this._commandsPath = commandsPath;
     this._eventsPath = eventsPath;
+    this._validationsPath = validationsPath;
     this._testServer = testServer;
     this._commands = [];
     this._events = [];
@@ -17,6 +18,7 @@ export class DiscordHandler {
       this._commandsInit();
       this._client.once('ready', () => {
         this._registerSlashCommands();
+        this._handleCommands();
       });
     }
 
@@ -52,6 +54,17 @@ export class DiscordHandler {
         }
       });
     }
+  }
+
+  _handleCommands() {
+    this._client.on('interactionCreate', async (interaction) => {
+      if (!interaction.isChatInputCommand()) return;
+
+      const command = this._commands.find((cmd) => cmd.name === interaction.commandName);
+      if (command) {
+        await command.run(interaction, this._client);
+      }
+    });
   }
 
   get commands() {
