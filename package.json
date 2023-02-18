@@ -1,5 +1,5 @@
 {
-  "name": "discord-handler",
+  "name": "djs-commander",
   "version": "0.0.1",
   "description": "A command and event handler that works seemlessly with Discord.js",
   "license": "MIT",
@@ -17,13 +17,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/notunderctrl/discord-handler"
+    "url": "https://github.com/notunderctrl/djs-commander"
   },
   "keywords": [
     "discord.js",
-    "discord command handler",
-    "discord event handler",
-    "discord validations"
+    "command",
+    "handler",
+    "events",
+    "validations"
   ],
   "devDependencies": {
     "tsup": "^6.6.0",

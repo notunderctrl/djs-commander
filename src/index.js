@@ -2,9 +2,9 @@ const { getFolderPaths, getFilePaths } = require('./utils/getPaths');
 const { buildCommandTree } = require('./utils/buildCommandTree');
 const { registerCommands } = require('./utils/registerCommands');
 
-export class DiscordHandler {
+export class CommandHandler {
   constructor({ client, commandsPath, eventsPath, validationsPath, testServer }) {
-    if (!client) throw new Error('Property "client" is required when instantiating DiscordHandler.');
+    if (!client) throw new Error('Property "client" is required when instantiating CommandHandler.');
 
     this._client = client;
     this._commandsPath = commandsPath;

@@ -1,23 +1,23 @@
-# Discord-Handler: A Library for Discord.js Projects
+# DJS-Commander: A Library for Discord.js Projects
 
-Discord-Handler is an easy-to-use JavaScript library that simplifies the process of handling commands, events, and validations in your Discord.js projects.
+DJS-Commander is an easy-to-use JavaScript library that simplifies the process of handling commands, events, and validations in your Discord.js projects.
 
 Discord.js version supported: `v14`
 
 ## Installation
 
-To install Discord-Handler, simply run the following command:
+To install DJS-Commander, simply run the following command:
 
 ```bash
-npm install discord-handler
+npm install djs-commander
 ```
 
 ## Usage
 
 ```js
 // index.js
-const { Client, IntentsBitField } = require('discord.js);
-const { DiscordHandler } = require('discord-handler');
+const { Client, IntentsBitField } = require('discord.js');
+const { DiscordHandler } = require('djs-commander');
 const path = require('path');
 
 const client = new Client({
@@ -32,14 +32,14 @@ new DiscordHandler({
   testServer: 'TEST_SERVER_ID', // To register guild-based commands
 });
 
-client.login('YOUR_TOKEN_HERE')
+client.login('YOUR_TOKEN_HERE');
 ```
 
 ## File Structure
 
 ### Commands
 
-Discord-Handler allows a very flexible file structure for your commands directory. Here's an example of what your file structure could look like:
+DJS-Commander allows a very flexible file structure for your commands directory. Here's an example of what your file structure could look like:
 
 ```
 commands/
@@ -71,7 +71,7 @@ module.exports = {
 
 ### Events
 
-Discord-Handler assumes a specific file structure for your events. Here's an example of what your file structure could look like:
+DJS-Commander assumes a specific file structure for your events. Here's an example of what your file structure could look like:
 
 ```
 events/
@@ -102,7 +102,7 @@ module.exports = (argument, client) => {
 
 ### Validations
 
-Discord-Handler allows you to organize your validation files however you want to. Functions inside these files are executed in ascending order so you can prioritize your validations however you see fit. Here’s an example of what your file structure could look like:
+DJS-Commander allows you to organize your validation files however you want to. Functions inside these files are executed in ascending order so you can prioritize your validations however you see fit. Here’s an example of what your file structure could look like:
 
 ```
 validations/
@@ -130,4 +130,4 @@ It's important to return `true` (or any truthy value) if you don't want the comm
 
 ## License
 
-Discord-Handler is open-source software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+DJS-Commander is open-source software licensed under the [MIT license](https://opensource.org/licenses/MIT).
