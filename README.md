@@ -46,7 +46,7 @@ commands/
 ├── command1.js
 ├── command2.js
 └── category/
-	└── command3.js
+	├── command3.js
 	└── commands4.js
 ```
 
