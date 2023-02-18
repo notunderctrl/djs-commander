@@ -3,11 +3,11 @@
   "version": "0.0.1",
   "description": "A command and event handler that works seemlessly with Discord.js",
   "license": "MIT",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "require": "./dist/index.js",
-      "import": "./dist/index.mjs",
-      "types": "./dist/index.d.ts"
+      "import": "./dist/index.mjs"
     }
   },
   "scripts": {
