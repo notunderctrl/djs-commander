@@ -52,6 +52,7 @@ export class DiscordHandler {
     for (const eventPath of eventPaths) {
       const eventName = eventPath.replace(/\\/g, '/').split('/').pop();
       const eventFuncPaths = getFilePaths(eventPath, true);
+      eventFuncPaths.sort();
 
       this._client.on(eventName, async (arg) => {
         for (const eventFuncPath of eventFuncPaths) {
