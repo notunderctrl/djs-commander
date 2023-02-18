@@ -17,14 +17,14 @@ npm install djs-commander
 ```js
 // index.js
 const { Client, IntentsBitField } = require('discord.js');
-const { DiscordHandler } = require('djs-commander');
+const { CommandHandler } = require('djs-commander');
 const path = require('path');
 
 const client = new Client({
   intents: [IntentsBitField.Flags.Guilds], // Your bot's intents
 });
 
-new DiscordHandler({
+new CommandHandler({
   client, // Discord.js client object
   commandsPath: path.join(__dirname, 'commands'), // The commands folder
   eventsPath: path.join(__dirname, 'events'), // The events folder
