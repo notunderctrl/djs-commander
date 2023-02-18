@@ -12,12 +12,19 @@ export class DiscordHandler {
     this._validationsPath = validationsPath;
     this._testServer = testServer;
     this._commands = [];
-    this._events = [];
+    this._validationFuncs = [];
+
+    if (this._validationsPath && !commandsPath) {
+      throw new Error(
+        'Command validations are only available in the presence of a commands path. Either add "commandsPath" or remove "validationsPath"'
+      );
+    }
 
     if (this._commandsPath) {
       this._commandsInit();
       this._client.once('ready', () => {
         this._registerSlashCommands();
+        this._initValidations();
         this._handleCommands();
       });
     }
@@ -40,7 +47,6 @@ export class DiscordHandler {
   }
 
   _eventsInit() {
-    // Regular event handler
     const eventPaths = getFolderPaths(this._eventsPath);
 
     for (const eventPath of eventPaths) {
@@ -56,13 +62,44 @@ export class DiscordHandler {
     }
   }
 
+  _initValidations() {
+    const validationFilePaths = getFilePaths(this._validationsPath);
+    validationFilePaths.sort();
+
+    for (const validationFilePath of validationFilePaths) {
+      const validationFunc = require(validationFilePath);
+      if (typeof validationFunc !== 'function') {
+        throw new Error(`Validation file ${validationFilePath} must export a function by default.`);
+      }
+
+      this._validationFuncs.push(validationFunc);
+    }
+  }
+
   _handleCommands() {
     this._client.on('interactionCreate', async (interaction) => {
       if (!interaction.isChatInputCommand()) return;
 
       const command = this._commands.find((cmd) => cmd.name === interaction.commandName);
       if (command) {
-        await command.run(interaction, this._client);
+        // Run validation functions
+        if (this._validationFuncs.length) {
+          let canRun = true;
+
+          for (const validationFunc of this._validationFuncs) {
+            const result = await validationFunc(interaction, command);
+            if (result) {
+              canRun = false;
+              break;
+            }
+          }
+
+          if (canRun) await command.run(interaction, this._client);
+        } else {
+          await command.run(interaction, this._client);
+        }
+      } else {
+        interaction.reply({ content: 'Command not found.', ephemeral: true });
       }
     });
   }
