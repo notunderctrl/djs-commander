@@ -24,7 +24,7 @@ export class CommandHandler {
       this._commandsInit();
       this._client.once('ready', () => {
         this._registerSlashCommands();
-        this._initValidations();
+        this._validationsPath && this._initValidations();
         this._handleCommands();
       });
     }
