@@ -1,6 +1,6 @@
 {
   "name": "djs-commander",
-  "version": "0.0.34",
+  "version": "0.0.35",
   "description": "A command and event handler that works seemlessly with Discord.js",
   "types": "./dist/index.d.ts",
   "exports": {
@@ -18,6 +18,7 @@
     "type": "git",
     "url": "https://github.com/notunderctrl/djs-commander"
   },
+  "homepage": "https://djs-commander.underctrl.io",
   "keywords": [
     "discord.js",
     "command",

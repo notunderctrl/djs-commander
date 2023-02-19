@@ -4,6 +4,10 @@ DJS-Commander is an easy-to-use JavaScript library that simplifies the process o
 
 Discord.js version supported: `v14`
 
+## Documentation
+
+You can find the full documentation [here](https://djs-commander.underctrl.io)
+
 ## Installation
 
 To install DJS-Commander, simply run the following command:

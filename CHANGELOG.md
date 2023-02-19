@@ -4,7 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 
-## [0.0.33] - 2023-02-19
+## [0.0.35] - 2023-02-20
+
+### Added
+
+- Link to documentation
+
+## [0.0.34] - 2023-02-19
 
 ### Fixed
 
