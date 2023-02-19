@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 
 ## [0.0.33] - 2023-02-19
 
+### Fixed
+
+- Fix README.md validation return message.
+
+## [0.0.33] - 2023-02-19
+
 ### Added
 
 - Add a commands property for the CommandHandler instance

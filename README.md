@@ -141,4 +141,4 @@ module.exports = (interaction, commandObj, handler) => {
 - `commandObj` is the command object exported from the command file itself. Properties such as `name`, `description` and `options` are all available within.
 - `handler` is the CommandHandler instance. You can use this to get access to properties such as `commands`.
 
-It's important to return `true` (or any truthy value) if you don't want the command execution to be stopped (this also ensures the next validation queued up is not run).
+It's important to return `true` (or any truthy value) if you don't want the command to be executed (this also ensures the next validation that was queued up is not executed).
