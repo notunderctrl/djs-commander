@@ -1,0 +1,21 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](http://keepachangelog.com/)
+
+## [0.0.33] - 2023-02-19
+
+### Added
+
+- Add a commands property for the CommandHandler instance
+- Allow commands to have access to the CommandHandler instance
+
+### Changed
+
+- Opt for object destructuring in command parameters
+- README.md examples.
+
+### Fixed
+
+- README.md examples.

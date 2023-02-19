@@ -8,8 +8,16 @@ Discord.js version supported: `v14`
 
 To install DJS-Commander, simply run the following command:
 
+For npm:
+
 ```bash
 npm install djs-commander
+```
+
+For yarn:
+
+```yarn
+yarn add djs-commander
 ```
 
 ## Usage
@@ -29,7 +37,7 @@ new CommandHandler({
   commandsPath: path.join(__dirname, 'commands'), // The commands folder
   eventsPath: path.join(__dirname, 'events'), // The events folder
   validationsPath: path.join(__dirname, 'validations'), // Only works if commandsPath is provided
-  testServer: 'TEST_SERVER_ID', // To register guild-based commands
+  testServer: 'TEST_SERVER_ID', // To register guild-based commands (if not provided commands will be registered globally)
 });
 
 client.login('YOUR_TOKEN_HERE');
@@ -59,13 +67,17 @@ const { SlashCommandBuilder } = require('discord.js');
 module.exports = {
   data: new SlashCommandBuilder().setName('ping').setDescription('Pong!'),
 
-  run: (interaction, client) => {
+  run: ({ interaction, client, handler }) => {
     interaction.reply(`Pong! ${client.ws.ping}ms`);
   },
 
-  // deleted: true, // Deletes the command from Discord
+  // deleted: true, // Deletes the command from Discord (if you passed in a "testServer" property it'll delete from the guild and not globally)
 };
 ```
+
+- `interaction`
+- `client` is the discord.js Client instance.
+- `handler` is the CommandHandler instance. You can use this to get access to properties such as `commands`.
 
 ---
 
@@ -91,12 +103,14 @@ Make sure each file exports a default function. Like this:
 
 ```js
 // events/ready/console-log.js
-module.exports = (argument, client) => {
+module.exports = (argument, client, handler) => {
   console.log(`${client.user.tag} is online.`);
 };
 ```
 
 - `argument` is the argument you receive from the event being triggered (you can name this whatever you want). For example, the `messageCreate` event will give you an argument of the message object.
+- `client` is the discord.js Client instance.
+- `handler` is the CommandHandler instance. You can use this to get access to properties such as `commands`.
 
 ---
 
@@ -113,11 +127,11 @@ Make sure each file exports a default function. Like this:
 
 ```js
 // validations/dev-only.js
-module.exports = (interaction, commandObj) => {
+module.exports = (interaction, commandObj, handler) => {
   if (commandObj.devOnly) {
     if (interaction.member.id !== 'DEVELOPER_ID') {
       interaction.reply('This command is for the developer only');
-      return true; // This will stop the command from being executed.
+      return true; // This must be added to stop the command from being executed.
     }
   }
 };
@@ -125,5 +139,6 @@ module.exports = (interaction, commandObj) => {
 
 - `interaction` is the interaction object.
 - `commandObj` is the command object exported from the command file itself. Properties such as `name`, `description` and `options` are all available within.
+- `handler` is the CommandHandler instance. You can use this to get access to properties such as `commands`.
 
 It's important to return `true` (or any truthy value) if you don't want the command execution to be stopped (this also ensures the next validation queued up is not run).
