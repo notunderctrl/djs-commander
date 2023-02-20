@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 
+## [0.0.38] - 2023-02-20
+
+### Fixed
+
+- Undefined client object inside validation functions
+
 ## [0.0.37] - 2023-02-20
 
 ### Added

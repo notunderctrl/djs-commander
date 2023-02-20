@@ -99,7 +99,7 @@ export class CommandHandler {
           let canRun = true;
 
           for (const validationFunc of this._validationFuncs) {
-            const cantRunCommand = await validationFunc(interaction, command, this, client);
+            const cantRunCommand = await validationFunc(interaction, command, this, this._client);
             if (cantRunCommand) {
               canRun = false;
               break;
