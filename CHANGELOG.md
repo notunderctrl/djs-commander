@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 
+## [0.0.37] - 2023-02-20
+
+### Added
+
+- Reflect v0.0.36 changes to README.md
+
 ## [0.0.36] - 2023-02-20
 
 No breaking changes

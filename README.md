@@ -131,7 +131,7 @@ Make sure each file exports a default function. Like this:
 
 ```js
 // validations/dev-only.js
-module.exports = (interaction, commandObj, handler) => {
+module.exports = (interaction, commandObj, handler, client) => {
   if (commandObj.devOnly) {
     if (interaction.member.id !== 'DEVELOPER_ID') {
       interaction.reply('This command is for the developer only');
@@ -144,5 +144,6 @@ module.exports = (interaction, commandObj, handler) => {
 - `interaction` is the interaction object.
 - `commandObj` is the command object exported from the command file itself. Properties such as `name`, `description` and `options` are all available within.
 - `handler` is the CommandHandler instance. You can use this to get access to properties such as `commands`.
+- `client` is the Client instance. (defined in your main entry point)
 
 It's important to return `true` (or any truthy value) if you don't want the command to be executed (this also ensures the next validation that was queued up is not executed).
