@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 
+## [0.0.36] - 2023-02-20
+
+No breaking changes
+
+### Added
+
+- Client parameter to validation functions
+
+### Changed
+
+- Internal function naming
+
 ## [0.0.35] - 2023-02-20
 
 ### Added

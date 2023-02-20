@@ -26,7 +26,7 @@ export class CommandHandler {
       this._commandsInit();
       this._client.once('ready', () => {
         this._registerSlashCommands();
-        this._validationsPath && this._initValidations();
+        this._validationsPath && this._validationsInit();
         this._handleCommands();
       });
     }
@@ -74,7 +74,7 @@ export class CommandHandler {
     }
   }
 
-  _initValidations() {
+  _validationsInit() {
     const validationFilePaths = getFilePaths(this._validationsPath);
     validationFilePaths.sort();
 
@@ -99,7 +99,7 @@ export class CommandHandler {
           let canRun = true;
 
           for (const validationFunc of this._validationFuncs) {
-            const cantRunCommand = await validationFunc(interaction, command, this);
+            const cantRunCommand = await validationFunc(interaction, command, this, client);
             if (cantRunCommand) {
               canRun = false;
               break;
