@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 
+## [0.0.39] - 2023-02-24
+
+### Fixed
+
+- Incomplete `commandObj` in validation files
+
 ## [0.0.38] - 2023-02-20
 
 ### Fixed

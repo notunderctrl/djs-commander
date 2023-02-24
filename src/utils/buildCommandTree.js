@@ -6,7 +6,7 @@ export function buildCommandTree(commandsDir) {
   const commandFilePaths = getFilePaths(commandsDir, true);
 
   for (const commandFilePath of commandFilePaths) {
-    const { data, run, deleted } = require(commandFilePath);
+    const { data, run, deleted, ...rest } = require(commandFilePath);
     if (!data) throw new Error(`File ${commandFilePath} must export "data".`);
     if (!run) throw new Error(`File ${commandFilePath} must export a "run" function.`);
     if (!data.name) throw new Error(`File ${commandFilePath} must have a command name.`);
@@ -14,6 +14,7 @@ export function buildCommandTree(commandsDir) {
 
     commandTree.push({
       ...data,
+      ...rest,
       deleted: deleted || null,
       run,
     });
