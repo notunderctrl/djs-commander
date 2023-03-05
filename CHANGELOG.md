@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 
+## [0.0.40] - 2023-03-05
+
+### Fixed
+
+- Typings for TypeScript projects.
+
 ## [0.0.39] - 2023-02-24
 
 ### Fixed
