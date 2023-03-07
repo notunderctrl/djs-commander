@@ -57,10 +57,10 @@ export class CommandHandler {
       const eventFuncPaths = getFilePaths(eventPath, true);
       eventFuncPaths.sort();
 
-      this._client.on(eventName, async (arg) => {
+      this._client.on(eventName, async (...arg) => {
         for (const eventFuncPath of eventFuncPaths) {
           const eventFunc = require(eventFuncPath);
-          await eventFunc(arg, this._client, this);
+          await eventFunc(...arg, this._client, this);
         }
       });
     }

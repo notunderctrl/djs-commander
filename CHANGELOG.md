@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 
+## [0.0.42] - 2023-03-07
+
+### Added
+
+- Multiple arguments support for events
+
 ## [0.0.41] - 2023-03-07
 
 ### Fixed
