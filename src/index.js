@@ -39,13 +39,12 @@ export class CommandHandler {
   _commandsInit() {
     let commands = buildCommandTree(this._commandsPath);
     this._commands = commands;
-    this._commandsToRegister = JSON.parse(JSON.stringify(commands));
   }
 
   _registerSlashCommands() {
     registerCommands({
       client: this._client,
-      commands: this._commandsToRegister,
+      commands: this._commands,
       testServer: this._testServer,
     });
   }
