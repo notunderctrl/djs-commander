@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 
+## [0.0.41] - 2023-03-07
+
+### Fixed
+
+- "deleted" property not working for commands.
+
 ## [0.0.40] - 2023-03-05
 
 ### Fixed

@@ -4,7 +4,8 @@ const { registerCommands } = require('./utils/registerCommands');
 
 export class CommandHandler {
   constructor({ client, commandsPath, eventsPath, validationsPath, testServer }) {
-    if (!client) throw new Error('Property "client" is required when instantiating CommandHandler.');
+    if (!client)
+      throw new Error('Property "client" is required when instantiating CommandHandler.');
 
     this._client = client;
     this._commandsPath = commandsPath;
@@ -38,28 +39,7 @@ export class CommandHandler {
   _commandsInit() {
     let commands = buildCommandTree(this._commandsPath);
     this._commands = commands;
-
-    let commandsToRegister = JSON.parse(JSON.stringify(commands));
-    let fieldsToSend = [
-      'name',
-      'options',
-      'name_localizations',
-      'description',
-      'description_localizations',
-      'default_permission',
-      'default_member_permissions',
-      'dm_permission',
-    ];
-
-    commandsToRegister = commandsToRegister.map((cmd) => {
-      const filteredKeys = Object.keys(cmd).filter((key) => fieldsToSend.includes(key));
-      return filteredKeys.reduce((obj, key) => {
-        obj[key] = cmd[key];
-        return obj;
-      }, {});
-    });
-
-    this._commandsToRegister = commandsToRegister;
+    this._commandsToRegister = JSON.parse(JSON.stringify(commands));
   }
 
   _registerSlashCommands() {

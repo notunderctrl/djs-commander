@@ -1,6 +1,6 @@
 {
   "name": "djs-commander",
-  "version": "0.0.40",
+  "version": "0.0.41",
   "description": "A command and event handler that works seemlessly with Discord.js",
   "types": "./index.d.ts",
   "exports": {
