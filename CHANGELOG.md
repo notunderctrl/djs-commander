@@ -4,6 +4,21 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 
+## [0.0.43] - 2023-03-07
+
+### Added
+
+- Support for the following slash command properties:
+  - `name_localizations`
+  - `description_localizations`
+  - `default_permission`,
+  - `default_member_permissions`,
+  - `dm_permission`,
+
+### Fixed
+
+- Options length not defaulting to 0 when commands are created using regular objects
+
 ## [0.0.42] - 2023-03-07
 
 ### Added

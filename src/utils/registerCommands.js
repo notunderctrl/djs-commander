@@ -5,7 +5,16 @@ export async function registerCommands({ client, commands: localCommands, testSe
   const applicationCommands = await getAppCommands(client, testServer);
 
   for (const localCommand of localCommands) {
-    const { name, description, options } = localCommand;
+    const {
+      name,
+      name_localizations,
+      description,
+      description_localizations,
+      default_permission,
+      default_member_permissions,
+      dm_permission,
+      options,
+    } = localCommand;
 
     const existingCommand = await applicationCommands.cache.find((cmd) => cmd.name === name);
 
@@ -32,7 +41,12 @@ export async function registerCommands({ client, commands: localCommands, testSe
 
       await applicationCommands.create({
         name,
+        name_localizations,
         description,
+        description_localizations,
+        default_permission,
+        default_member_permissions,
+        dm_permission,
         options,
       });
 
