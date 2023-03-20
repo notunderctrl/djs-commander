@@ -25,7 +25,7 @@ export async function registerCommands({
       options,
     } = localCommand;
 
-    const existingCommand = await applicationCommands.cache.find((cmd: any) => cmd.name === name);
+    const existingCommand = applicationCommands.cache.find((cmd: any) => cmd.name === name);
 
     if (existingCommand) {
       if (localCommand.deleted) {

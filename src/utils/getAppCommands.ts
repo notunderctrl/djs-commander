@@ -1,14 +1,13 @@
-import { Client } from 'discord.js';
-
-export async function getAppCommands(client: Client, guildId?: string) {
+export async function getAppCommands(client: any, guildId?: string) {
   let applicationCommands;
 
   if (guildId) {
     const guild = await client.guilds.fetch(guildId);
-    applicationCommands = await guild.commands.fetch();
+    applicationCommands = guild.commands;
   } else {
-    applicationCommands = await client.application?.commands.fetch();
+    applicationCommands = await client.application.commands;
   }
 
+  await applicationCommands.fetch();
   return applicationCommands;
 }
