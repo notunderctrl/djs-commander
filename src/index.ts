@@ -1,19 +1,39 @@
-const { getFolderPaths, getFilePaths } = require('./utils/getPaths');
-const { buildCommandTree } = require('./utils/buildCommandTree');
-const { registerCommands } = require('./utils/registerCommands');
+import { Client } from 'discord.js';
+import { LocalCommand } from './dev';
+import { getFolderPaths, getFilePaths } from './utils/getPaths';
+import { buildCommandTree } from './utils/buildCommandTree';
+import { registerCommands } from './utils/registerCommands';
 
 export class CommandHandler {
-  constructor({ client, commandsPath, eventsPath, validationsPath, testServer }) {
-    if (!client)
-      throw new Error('Property "client" is required when instantiating CommandHandler.');
+  private readonly _client: Client;
+  private readonly _commandsPath: string | undefined;
+  private readonly _eventsPath: string | undefined;
+  private readonly _validationsPath: string | undefined;
+  private readonly _testServer: string | undefined;
+  private readonly _validationFuncs: Array<Function>;
+  private _commands: Array<LocalCommand>;
+
+  constructor({
+    client,
+    commandsPath,
+    eventsPath,
+    validationsPath,
+    testServer,
+  }: {
+    client: Client;
+    commandsPath?: string;
+    eventsPath?: string;
+    validationsPath?: string;
+    testServer?: string;
+  }) {
+    if (!client) throw new Error('Property "client" is required when instantiating CommandHandler.');
 
     this._client = client;
     this._commandsPath = commandsPath;
     this._eventsPath = eventsPath;
     this._validationsPath = validationsPath;
     this._testServer = testServer;
-    this._commands = []; // includes all the properties and methods exported from command file
-    this._commandsToRegister = []; // doesn't include the `deleted` or `run` properties
+    this._commands = [];
     this._validationFuncs = [];
 
     if (this._validationsPath && !commandsPath) {
@@ -56,6 +76,8 @@ export class CommandHandler {
       const eventName = eventPath.replace(/\\/g, '/').split('/').pop();
       const eventFuncPaths = getFilePaths(eventPath, true);
       eventFuncPaths.sort();
+
+      if (!eventName) continue;
 
       this._client.on(eventName, async (...arg) => {
         for (const eventFuncPath of eventFuncPaths) {

@@ -1,8 +1,9 @@
 const fs = require('fs');
 const path = require('path');
 
-export function getFilePaths(directory, nesting) {
-  let filePaths = [];
+export function getFilePaths(directory: string | undefined, nesting?: boolean): string[] {
+  let filePaths: string[] = [];
+  if (!directory) return filePaths;
 
   const files = fs.readdirSync(directory, { withFileTypes: true });
 
@@ -21,8 +22,9 @@ export function getFilePaths(directory, nesting) {
   return filePaths;
 }
 
-export function getFolderPaths(directory, nesting) {
-  let folderPaths = [];
+export function getFolderPaths(directory: string | undefined, nesting?: boolean): string[] {
+  let folderPaths: string[] = [];
+  if (!directory) return folderPaths;
 
   const folders = fs.readdirSync(directory, { withFileTypes: true });
 
