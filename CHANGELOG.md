@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 
+## [0.0.44] - 2023-03-21
+
+### Added
+
+- Support for stopping event functions.
+- TypeScript support for development.
+
 ## [0.0.43] - 2023-03-16
 
 ### Added

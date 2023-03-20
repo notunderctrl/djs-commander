@@ -82,7 +82,8 @@ export class CommandHandler {
       this._client.on(eventName, async (...arg) => {
         for (const eventFuncPath of eventFuncPaths) {
           const eventFunc = require(eventFuncPath);
-          await eventFunc(...arg, this._client, this);
+          const cantRunEvent = await eventFunc(...arg, this._client, this);
+          if (cantRunEvent) break;
         }
       });
     }

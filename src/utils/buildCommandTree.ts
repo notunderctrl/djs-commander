@@ -1,6 +1,6 @@
 const { getFilePaths } = require('./getPaths');
 
-export function buildCommandTree(commandsDir: string | undefined) {
+export function buildCommandTree(commandsDir?: string) {
   const commandTree = [];
 
   if (!commandsDir) return [];

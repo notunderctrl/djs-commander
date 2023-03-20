@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-export function getFilePaths(directory: string | undefined, nesting?: boolean): string[] {
+export function getFilePaths(directory?: string, nesting?: boolean): string[] {
   let filePaths: string[] = [];
   if (!directory) return filePaths;
 
@@ -22,7 +22,7 @@ export function getFilePaths(directory: string | undefined, nesting?: boolean): 
   return filePaths;
 }
 
-export function getFolderPaths(directory: string | undefined, nesting?: boolean): string[] {
+export function getFolderPaths(directory?: string, nesting?: boolean): string[] {
   let folderPaths: string[] = [];
   if (!directory) return folderPaths;
 
