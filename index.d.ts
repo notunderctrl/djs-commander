@@ -1,19 +1,21 @@
-import { Client } from 'discord.js';
+import { Client, APIApplicationCommand } from 'discord.js';
 
 class CommandHandler {
-  constructor({
-    client,
-    commandsPath,
-    eventsPath,
-    validationsPath,
-    testServer,
-  }: {
-    client: Client;
-    commandsPath?: string;
-    eventsPath?: string;
-    validationsPath?: string;
-    testServer?: string;
-  });
+  constructor(options: CommandHandlerOptions);
+  public get commands(): LocalCommand[];
 }
 
-export { CommandHandler };
+interface CommandHandlerOptions {
+  client: Client;
+  commandsPath?: string;
+  eventsPath?: string;
+  validationsPath?: string;
+  testServer?: string;
+}
+
+interface LocalCommand extends APIApplicationCommand {
+  deleted?: boolean;
+  [key: string]: any;
+}
+
+export { CommandHandler, LocalCommand };

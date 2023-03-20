@@ -1,7 +1,9 @@
 const { getFilePaths } = require('./getPaths');
 
-export function buildCommandTree(commandsDir) {
+export function buildCommandTree(commandsDir: string | undefined) {
   const commandTree = [];
+
+  if (!commandsDir) return [];
 
   const commandFilePaths = getFilePaths(commandsDir, true);
 
@@ -15,7 +17,7 @@ export function buildCommandTree(commandsDir) {
     commandTree.push({
       ...data,
       ...rest,
-      deleted: deleted || null,
+      deleted,
       run,
     });
   }

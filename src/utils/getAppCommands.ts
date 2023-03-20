@@ -1,4 +1,4 @@
-export async function getAppCommands(client, guildId) {
+export async function getAppCommands(client: any, guildId?: string) {
   let applicationCommands;
 
   if (guildId) {
