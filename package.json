@@ -10,7 +10,7 @@
     }
   },
   "scripts": {
-    "build": "rm -rf dist && tsup src/index.js --format cjs,esm --clean",
+    "build": "rm -rf dist && tsup src/index.ts --format cjs,esm --clean",
     "watch": "yarn build --watch src",
     "prepublishOnly": "yarn build"
   },
