@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 
+## [0.0.45] - 2023-04-6
+
+### Fixed
+
+- Property "type" not being set on option objects which are a result of the `SlashCommandBuilder` class.
+
 ## [0.0.44] - 2023-03-21
 
 ### Added
