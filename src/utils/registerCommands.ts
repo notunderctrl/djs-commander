@@ -58,7 +58,7 @@ export async function registerCommands({
         options,
       });
 
-      console.log(`👍 Registered command "${name}."`);
+      console.log(`👍 Registered command "${name}".`);
     }
   }
 }
