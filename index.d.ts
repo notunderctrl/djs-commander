@@ -1,4 +1,5 @@
 import { Client, APIApplicationCommand } from 'discord.js';
+import { Logger } from 'winston';
 
 class CommandHandler {
   constructor(options: CommandHandlerOptions);
@@ -11,6 +12,7 @@ interface CommandHandlerOptions {
   eventsPath?: string;
   validationsPath?: string;
   testServer?: string;
+  logger?: Logger;
 }
 
 interface LocalCommand extends APIApplicationCommand {
