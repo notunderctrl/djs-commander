@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 
+## [0.0.47] - 2023-05-23
+
+### Changed
+
+- Remove automatic reply to commands when a command doesn't exist locally
+
 ## [0.0.46] - 2023-05-23
 
 ### Added
