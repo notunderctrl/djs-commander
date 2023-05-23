@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 
+## [0.0.46] - 2023-05-23
+
+### Added
+
+- Add winston logger | Feature credit: (Lenme-exe)[https://github.com/Lenme-exe] [#6](https://github.com/notunderctrl/djs-commander/pull/6)
+
+### Changed
+
+- Update "registered command" message emoji from "👍" to "✅"
+
 ## [0.0.45] - 2023-04-6
 
 ### Fixed
