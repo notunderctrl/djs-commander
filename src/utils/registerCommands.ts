@@ -28,16 +28,19 @@ export async function registerCommands({
       options,
     } = localCommand;
 
-    const existingCommand = applicationCommands.cache.find(
-      (cmd: any) => cmd.name === name
-    );
+    const existingCommand = applicationCommands.cache.find((cmd: any) => cmd.name === name);
 
     if (existingCommand) {
       if (localCommand.deleted) {
         await applicationCommands.delete(existingCommand.id);
+
         let message = `🗑 Deleted command "${name}".`;
-        if (logger) logger.info(message);
-        else console.log(message);
+
+        if (logger) {
+          logger.info(message);
+        } else {
+          console.log(message);
+        }
 
         continue;
       }
@@ -49,14 +52,22 @@ export async function registerCommands({
         });
 
         let message = `🔁 Edited command "${name}".`;
-        if (logger) logger.info(message);
-        else console.log(message);
+
+        if (logger) {
+          logger.info(message);
+        } else {
+          console.log(message);
+        }
       }
     } else {
       if (localCommand.deleted) {
         let message = `⏩ Skipping registering command "${name}" as it's set to delete.`;
-        if (logger) logger.info(message);
-        else console.log(message);
+        if (logger) {
+          logger.info(message);
+        } else {
+          console.log(message);
+        }
+
         continue;
       }
 
@@ -70,9 +81,13 @@ export async function registerCommands({
         options,
       });
 
-      let message = `👍 Registered command "${name}".`;
-      if (logger) logger.info(message);
-      else console.log(message);
+      let message = `✅ Registered command "${name}".`;
+
+      if (logger) {
+        logger.info(message);
+      } else {
+        console.log(message);
+      }
     }
   }
 }
