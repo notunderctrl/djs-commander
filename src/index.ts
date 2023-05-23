@@ -31,9 +31,7 @@ export class CommandHandler {
     logger?: Logger;
   }) {
     if (!client)
-      throw new Error(
-        'Property "client" is required when instantiating CommandHandler.'
-      );
+      throw new Error('Property "client" is required when instantiating CommandHandler.');
 
     this._client = client;
     this._commandsPath = commandsPath;
@@ -105,9 +103,7 @@ export class CommandHandler {
     for (const validationFilePath of validationFilePaths) {
       const validationFunc = require(validationFilePath);
       if (typeof validationFunc !== 'function') {
-        throw new Error(
-          `Validation file ${validationFilePath} must export a function by default.`
-        );
+        throw new Error(`Validation file ${validationFilePath} must export a function by default.`);
       }
 
       this._validationFuncs.push(validationFunc);
@@ -118,21 +114,14 @@ export class CommandHandler {
     this._client.on('interactionCreate', async (interaction) => {
       if (!interaction.isChatInputCommand()) return;
 
-      const command = this._commands.find(
-        (cmd) => cmd.name === interaction.commandName
-      );
+      const command = this._commands.find((cmd) => cmd.name === interaction.commandName);
       if (command) {
         // Run validation functions
         if (this._validationFuncs.length) {
           let canRun = true;
 
           for (const validationFunc of this._validationFuncs) {
-            const cantRunCommand = await validationFunc(
-              interaction,
-              command,
-              this,
-              this._client
-            );
+            const cantRunCommand = await validationFunc(interaction, command, this, this._client);
             if (cantRunCommand) {
               canRun = false;
               break;
@@ -153,8 +142,6 @@ export class CommandHandler {
             handler: this,
           });
         }
-      } else {
-        interaction.reply({ content: 'Command not found.', ephemeral: true });
       }
     });
   }
