@@ -1,7 +1,7 @@
 {
   "name": "djs-commander",
-  "version": "0.0.45",
-  "description": "A command and event handler that works seemlessly with Discord.js",
+  "version": "0.0.46",
+  "description": "A command and event handler that works seamlessly with Discord.js",
   "types": "./index.d.ts",
   "exports": {
     ".": {
@@ -29,6 +29,7 @@
   "devDependencies": {
     "discord.js": "^14.7.1",
     "tsup": "^6.6.0",
-    "typescript": "^4.9.5"
+    "typescript": "^4.9.5",
+    "winston": "^3.8.2"
   }
 }

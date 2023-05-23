@@ -30,10 +30,18 @@ yarn add djs-commander
 // index.js
 const { Client, IntentsBitField } = require('discord.js');
 const { CommandHandler } = require('djs-commander');
+const winston = require('winston');
 const path = require('path');
 
 const client = new Client({
   intents: [IntentsBitField.Flags.Guilds], // Your bot's intents
+});
+
+const logger = winston.createLogger({
+  // Optional highly customizable winston logger
+  level: 'info',
+  format: winston.format.json(),
+  transports: [new winston.transports.Console()],
 });
 
 new CommandHandler({
@@ -42,6 +50,7 @@ new CommandHandler({
   eventsPath: path.join(__dirname, 'events'), // The events folder
   validationsPath: path.join(__dirname, 'validations'), // Only works if commandsPath is provided
   testServer: 'TEST_SERVER_ID', // To register guild-based commands (if not provided commands will be registered globally)
+  logger: logger, // Changes the console output to match the specified logger configuration (if not provided logging will go through console.log)
 });
 
 client.login('YOUR_TOKEN_HERE');
@@ -53,7 +62,7 @@ client.login('YOUR_TOKEN_HERE');
 
 DJS-Commander allows a very flexible file structure for your commands directory. Here's an example of what your file structure could look like:
 
-```
+```shell
 commands/
 ├── command1.js
 ├── command2.js
@@ -89,7 +98,7 @@ module.exports = {
 
 DJS-Commander assumes a specific file structure for your events. Here's an example of what your file structure could look like:
 
-```
+```shell
 events/
 ├── ready/
 |	├── console-log.js
@@ -122,7 +131,7 @@ module.exports = (argument, client, handler) => {
 
 DJS-Commander allows you to organize your validation files however you want to. Functions inside these files are executed in ascending order so you can prioritize your validations however you see fit. Here’s an example of what your file structure could look like:
 
-```
+```shell
 validations/
 └── dev-only.js
 ```
