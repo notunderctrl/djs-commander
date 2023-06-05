@@ -11,6 +11,7 @@
   },
   "scripts": {
     "build": "rm -rf dist && tsup src/index.ts --format cjs,esm --clean",
+    "build_win": "Remove-Item dist -Recurse -Force; tsup.cmd src/index.ts --format cjs,esm --clean",
     "watch": "yarn build --watch src",
     "prepublishOnly": "yarn build"
   },

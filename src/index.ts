@@ -9,9 +9,11 @@ export class CommandHandler {
   private readonly _client: Client;
   private readonly _commandsPath: string | undefined;
   private readonly _eventsPath: string | undefined;
-  private readonly _validationsPath: string | undefined;
+  private readonly _commandValidationsPath: string | undefined;
+  private readonly _eventValidationsPath: string | undefined;
   private readonly _testServer: string | undefined;
-  private readonly _validationFuncs: Array<Function>;
+  private readonly _commandValidationFuncs: Array<Function>;
+  private readonly _eventValidationFuncs: Map<String, Function[]>;
   private readonly _logger: Logger | undefined;
   private _commands: Array<LocalCommand>;
 
@@ -19,14 +21,16 @@ export class CommandHandler {
     client,
     commandsPath,
     eventsPath,
-    validationsPath,
+    commandValidationsPath,
+    eventValidationsPath,
     testServer,
     logger,
   }: {
     client: Client;
     commandsPath?: string;
     eventsPath?: string;
-    validationsPath?: string;
+    commandValidationsPath?: string;
+    eventValidationsPath?: string;
     testServer?: string;
     logger?: Logger;
   }) {
@@ -36,15 +40,23 @@ export class CommandHandler {
     this._client = client;
     this._commandsPath = commandsPath;
     this._eventsPath = eventsPath;
-    this._validationsPath = validationsPath;
+    this._commandValidationsPath = commandValidationsPath;
+    this._eventValidationsPath = eventValidationsPath;
     this._testServer = testServer;
     this._commands = [];
-    this._validationFuncs = [];
+    this._commandValidationFuncs = [];
+    this._eventValidationFuncs = new Map<String, Function[]>();
     this._logger = logger;
 
-    if (this._validationsPath && !commandsPath) {
+    if (this._commandValidationsPath && !commandsPath) {
       throw new Error(
-        'Command validations are only available in the presence of a commands path. Either add "commandsPath" or remove "validationsPath"'
+        'Command validations are only available in the presence of a commands path. Either add "commandsPath" or remove "commandValidationsPath"'
+      );
+    }
+
+    if (this._eventValidationsPath && !eventsPath) {
+      throw new Error(
+        'Event validations are only available in the presence of a events path. Either add "eventsPath" or remove "eventValidationsPath"'
       );
     }
 
@@ -52,13 +64,16 @@ export class CommandHandler {
       this._commandsInit();
       this._client.once('ready', () => {
         this._registerSlashCommands();
-        this._validationsPath && this._validationsInit();
+        this._commandValidationsPath && this._commandValidationsInit();
         this._handleCommands();
       });
     }
 
     if (this._eventsPath) {
       this._eventsInit();
+      this._client.once('ready', () => {
+        this._eventValidationsPath && this._eventValidationsInit();
+      });
     }
   }
 
@@ -76,28 +91,44 @@ export class CommandHandler {
     });
   }
 
-  _eventsInit() {
-    const eventPaths = getFolderPaths(this._eventsPath);
-
-    for (const eventPath of eventPaths) {
-      const eventName = eventPath.replace(/\\/g, '/').split('/').pop();
-      const eventFuncPaths = getFilePaths(eventPath, true);
-      eventFuncPaths.sort();
-
-      if (!eventName) continue;
-
-      this._client.on(eventName, async (...arg) => {
-        for (const eventFuncPath of eventFuncPaths) {
-          const eventFunc = require(eventFuncPath);
-          const cantRunEvent = await eventFunc(...arg, this._client, this);
-          if (cantRunEvent) break;
-        }
-      });
+    _eventsInit() {
+      const eventPaths = getFolderPaths(this._eventsPath);
+  
+      for (const eventPath of eventPaths) {
+        const eventName = eventPath.replace(/\\/g, '/').split('/').pop();
+  
+        if (!eventName) continue;
+  
+        const eventFuncPaths = getFilePaths(eventPath, true);
+        eventFuncPaths.sort();
+  
+        const eventFuncs = eventFuncPaths.map(eventFuncPath => require(eventFuncPath));
+  
+        this._client.on(eventName, async (...arg) => {
+          for (const eventFunc of eventFuncs) {
+            let canRun = true;
+  
+            const validationFuncs = this._eventValidationFuncs.get(eventName);
+            if (validationFuncs && validationFuncs.length) {
+              for (const validationFunc of validationFuncs) {
+                const cantRunEvent = await validationFunc(...arg, this._client, this);
+                if (cantRunEvent) {
+                  canRun = false;
+                  break;
+                }
+              }
+            }
+            if (canRun) {
+              const cantRunEvent = await eventFunc(...arg, this._client, this);
+              if (cantRunEvent) break;
+            }
+          }
+        });
+      }
     }
-  }
 
-  _validationsInit() {
-    const validationFilePaths = getFilePaths(this._validationsPath);
+  _commandValidationsInit() {
+    const validationFilePaths = getFilePaths(this._commandValidationsPath);
     validationFilePaths.sort();
 
     for (const validationFilePath of validationFilePaths) {
@@ -106,7 +137,30 @@ export class CommandHandler {
         throw new Error(`Validation file ${validationFilePath} must export a function by default.`);
       }
 
-      this._validationFuncs.push(validationFunc);
+      this._commandValidationFuncs.push(validationFunc);
+    }
+  }
+
+  _eventValidationsInit() {
+    const validationFolderPaths = getFolderPaths(this._eventValidationsPath);
+
+    for (const validationFolderPath of validationFolderPaths) {
+      const validationFilePaths = getFilePaths(validationFolderPath);
+      validationFilePaths.sort();
+
+      const eventName = validationFolderPath.replace(/\\/g, '/').split('/').pop();
+      if (!eventName) continue;
+
+      for (const validationFilePath of validationFilePaths) {
+        const validationFunc = require(validationFilePath);
+        if (typeof validationFunc !== 'function') {
+          throw new Error(`Validation file ${validationFilePath} must export a function by default.`);
+        }
+
+        if (!this._eventValidationFuncs.has(eventName)) this._eventValidationFuncs.set(eventName, []);
+
+        this._eventValidationFuncs.get(eventName)?.push(validationFunc);
+      }
     }
   }
 
@@ -117,10 +171,10 @@ export class CommandHandler {
       const command = this._commands.find((cmd) => cmd.name === interaction.commandName);
       if (command) {
         // Run validation functions
-        if (this._validationFuncs.length) {
+        if (this._commandValidationFuncs.length) {
           let canRun = true;
 
-          for (const validationFunc of this._validationFuncs) {
+          for (const validationFunc of this._commandValidationFuncs) {
             const cantRunCommand = await validationFunc(interaction, command, this, this._client);
             if (cantRunCommand) {
               canRun = false;
