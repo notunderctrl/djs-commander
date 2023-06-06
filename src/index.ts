@@ -145,7 +145,7 @@ export class CommandHandler {
     const validationFolderPaths = getFolderPaths(this._eventValidationsPath);
 
     for (const validationFolderPath of validationFolderPaths) {
-      const validationFilePaths = getFilePaths(validationFolderPath);
+      const validationFilePaths = getFilePaths(validationFolderPath, true);
       validationFilePaths.sort();
 
       const eventName = validationFolderPath.replace(/\\/g, '/').split('/').pop();
