@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 
+## [0.0.50] - 2023-06-11
+
+### Changed
+
+- Revert to 0.0.47 state due to unstable ESM imports in Windows
+- Temporarily drop support for ESM
+
+## [0.0.48] - 2023-06-08
+
+### Fixed
+
+- Fixed a bug where djs-commander couldn't be imported in ESM projects
+
 ## [0.0.47] - 2023-05-23
 
 ### Changed
