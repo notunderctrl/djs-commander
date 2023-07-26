@@ -1,3 +1,5 @@
+**This library is no longer maintained. Use [CommandKit](https://github.com/notunderctrl/commandkit) instead**
+
 # DJS-Commander: A Library for Discord.js Projects
 
 DJS-Commander is an easy-to-use JavaScript library that simplifies the process of handling commands, events, and validations in your Discord.js projects.
